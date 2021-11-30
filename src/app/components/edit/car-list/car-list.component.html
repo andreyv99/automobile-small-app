@@ -1,0 +1,50 @@
+<h2>Автомобили</h2>
+<ng-container *ngIf="cars"></ng-container>
+<table class="table align-middle"
+       [formArrayName]="controlNames.cars">
+  <thead>
+    <tr>
+      <th scope="col">Номер</th>
+      <th scope="col">Марка</th>
+      <th scope="col">Модель</th>
+      <th scope="col">Год</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let car of cars.controls; let i = index">
+      <tr [formGroupName]="i">
+        <td>
+          <input type="text"
+                 class="form-control"
+                 [formControlName]="controlNames.carId">
+        </td>
+        <td>
+          <input type="text"
+                 class="form-control"
+                 [formControlName]="controlNames.manufacturerName">
+        </td>
+        <td>
+          <input type="text"
+                 class="form-control"
+                 [formControlName]="controlNames.modelName">
+        </td>
+        <td>
+          <input type="number"
+                 class="form-control"
+                 [formControlName]="controlNames.year">
+        </td>
+        <td>
+          <button type="button"
+                  (click)="deleteCar(i)"
+                  *ngIf="cars.controls.length > 1 && isEditPageState"
+                  class="btn btn-danger">Удалить</button>
+        </td>
+      </tr>
+    </ng-container>
+    <tr>
+  </tbody>
+</table>
+<button type="button"
+        *ngIf="isEditPageState"
+        class="btn btn-primary addIcon"
+        (click)="addCar()">Добавить автомобиль</button>

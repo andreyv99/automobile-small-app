@@ -1,0 +1,18 @@
+<form *ngIf="vm$ | async as vm"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="form">
+  <div [class.disable-inputs]="!vm.isEditPageState">
+    <app-personal-info [personalInfo]="vm.personalInfo"></app-personal-info>
+    <app-car-list [carsData]="vm.cars"
+                  [isEditPageState]="vm.isEditPageState"></app-car-list>
+  </div>
+  <div class="mt-2">
+    <button class="btn btn-primary"
+            [disabled]="form.invalid"
+            *ngIf="vm.isEditPageState"
+            type="submit">Сохранить</button>
+    <button class="btn btn-secondary mx-2"
+            [routerLink]="'/'"
+            type="button">Назад</button>
+  </div>
+</form>

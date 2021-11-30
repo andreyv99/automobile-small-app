@@ -1,0 +1,35 @@
+<h2>Владельцы автомобилей</h2>
+<button type="button"
+        class="btn btn-primary addIcon"
+        [routerLink]="[routePath.new]">Добавить</button>
+<table class="table align-middle"
+       *ngIf="vm$ | async as vm">
+  <thead>
+    <tr>
+      <th scope="col">Фамилия</th>
+      <th scope="col">Имя</th>
+      <th scope="col">Отчество</th>
+      <th scope="col">Количество автомобилей</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of vm">
+      <td>{{item.lastName}}</td>
+      <td>{{item.firstName}}</td>
+      <td>{{item.patronymic}}</td>
+      <td>{{item.carsAmount}}</td>
+      <td>
+        <button type="button"
+                class="btn btn-secondary"
+                [routerLink]="[item.id, routePath.view]">Просмотр</button>
+        <button type="button"
+                class="btn btn-secondary mx-2"
+                [routerLink]="[item.id, routePath.edit]">Редактировать</button>
+        <button type="button"
+                (click)="deleteOwner(item.id)"
+                class="btn btn-danger">Удалить</button>
+      </td>
+    </tr>
+    <tr>
+  </tbody>
+</table>

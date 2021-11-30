@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/scss/bootstrap";
+
+button.addIcon::before {
+  content: '+';
+  font-weight: 700;
+  margin-right: 2px;
+}
+
+.disable-inputs {
+  pointer-events: none;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
