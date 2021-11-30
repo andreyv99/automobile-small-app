@@ -24,9 +24,7 @@ export class CarOwnersService {
 
   deleteOwner$ = (id: number) => this.http.delete(`${this.ownersUrl}/${id}`);
 
-  saveOwner$ = (owner: OwnerEntity) => {
-    return this.http.put(`${this.ownersUrl}/${owner.id}`, owner)
-  };
+  saveOwner$ = (owner: OwnerEntity) => this.http.put(`${this.ownersUrl}/${owner.id}`, owner);
 
   saveOwnerCars$ = (cars: CarDBInterface) => this.http.put(`${this.carsUrl}/${cars.id}`, cars);
 
