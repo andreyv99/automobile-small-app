@@ -14,19 +14,33 @@ export class CarOwnersService {
 
   constructor(private http: HttpClient) { }
 
-  allOwners$ = this.http.get<OwnerEntity[]>(this.ownersUrl);
+  allOwners$ = this.http.get<OwnerEntity[]>(this.ownersUrl).pipe(
+    map(data => data.filter(item => item.id > 0))
+  );
 
-  allCars$ = this.http.get<CarEntity[]>(this.carsUrl);
+  allCars$ = this.http.get<CarEntity[]>(this.carsUrl).pipe(
+    map(data => data.filter(item => item.id > 0))
+  );
 
-  owner$ = (id?: number) => id ? this.http.get<OwnerEntity>(`${this.ownersUrl}/${id}`) : of(this.createOwnerModel());
+  owner$ = (id?: number) => id ? this.http.get<OwnerEntity>(`${this.ownersUrl}/${id}`) : this.allOwners$.pipe(
+    map(data => {
+      return {
+        firstName: '',
+        lastName: '',
+        patronymic: '',
+        id: ++data.length,
+        carsAmount: 0
+      } as OwnerEntity
+    })
+  );
 
   ownerCars$ = (id?: number) => id ? this.http.get<CarDBInterface>(`${this.carsUrl}/${id}`).pipe(map(data => data.cars)) : of(this.createCarModel());
 
   deleteOwner$ = (id: number) => this.http.delete(`${this.ownersUrl}/${id}`);
 
-  saveOwner$ = (owner: OwnerEntity) => this.http.put(`${this.ownersUrl}/${owner.id}`, owner);
+  saveOwner$ = (owner: OwnerEntity) => this.http.post(`${this.ownersUrl}/${owner.id}`, owner);
 
-  saveOwnerCars$ = (cars: CarDBInterface) => this.http.put(`${this.carsUrl}/${cars.id}`, cars);
+  saveOwnerCars$ = (cars: CarDBInterface) => this.http.post(`${this.carsUrl}/${cars.id}`, cars);
 
   private createCarModel(): CarEntity[] {
     return [{
@@ -37,15 +51,4 @@ export class CarOwnersService {
       carId: ''
     } as CarEntity]
   }
-
-  private createOwnerModel(): OwnerEntity {
-    return {
-      firstName: '',
-      lastName: '',
-      patronymic: '',
-      id: 0,
-      carsAmount: 0
-    } as OwnerEntity
-  }
-
 }

@@ -29,12 +29,9 @@ export class EditComponent {
         this.buildForm();
       }))))
 
-  constructor(private carOwnersService: CarOwnersService, private route: ActivatedRoute, private fb: FormBuilder, private router: Router) {
-
-  }
+  constructor(private carOwnersService: CarOwnersService, private route: ActivatedRoute, private fb: FormBuilder, private router: Router) { }
 
   onSubmit(): void {
-    console.log(this.form);
     combineLatest([this.carOwnersService.saveOwner$({ carsAmount: this.form.value.cars.length, ...this.form.value.personalInfo }),
     this.carOwnersService.saveOwnerCars$({ id: this.form.value.personalInfo.id, cars: this.form.value.cars })]).subscribe(() => {
       this.router.navigate(['/'])

@@ -63,10 +63,9 @@ export class CarListComponent implements OnInit {
         return !isOriginalValue && JSON.stringify(result).indexOf(input.value) > -1 ? { unique: false } : null
       })
     )
-
   }
+
   addCar(): void {
     this.cars.push(this.createCarForm())
   }
-
 }
