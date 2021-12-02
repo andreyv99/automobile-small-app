@@ -18,7 +18,7 @@ export class CarOwnersService {
     map(data => data.filter(item => item.id > 0))
   );
 
-  allCars$ = this.http.get<CarEntity[]>(this.carsUrl).pipe(
+  allCars$ = this.http.get<CarDBInterface[]>(this.carsUrl).pipe(
     map(data => data.filter(item => item.id > 0))
   );
 

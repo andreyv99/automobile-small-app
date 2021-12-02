@@ -60,7 +60,8 @@ export class CarListComponent implements OnInit {
       map(result => {
         // seems that this solution is not perfect :(
         const isOriginalValue = input.parent?.value.carId === input.value;
-        return !isOriginalValue && JSON.stringify(result).indexOf(input.value) > -1 ? { unique: false } : null
+        const rawCarIds = result.map(id => id.cars.map(car => car.carId))
+        return !isOriginalValue && JSON.stringify(rawCarIds).indexOf(input.value) > -1 ? { unique: false } : null
       })
     )
   }
